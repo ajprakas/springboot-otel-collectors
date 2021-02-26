@@ -3,6 +3,6 @@ This Springboot app contains two microservices user-service and mongo-service. T
 See Tracer bean in Userconfig and UserDbConfig.
 
 
-Also yaml files for deploying these microservices in K8S cluster is avaialble.
+Also yaml files for deploying these microservices in K8S cluster is available.
 
 Each Pod contains 3 containers- User-servcice, Mongo-Service and mongo-db
