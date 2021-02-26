@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: springbootapp-otelcollector-deployment-service
+  namespace: ajprakash
+  labels:
+    name: springbootapp-otelcollector-deployment-service
+spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  # type: LoadBalancer
+  type: NodePort
+  ports:
+    # the port that this service should serve on
+    - port: 8282
+      nodePort: 30089
+  selector:
+    name: springbootapp-otelcollector-deployment

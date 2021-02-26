@@ -1,0 +1,1 @@
+docker build -t ajprakash/opentelemetry-mongo-service:1.0 .

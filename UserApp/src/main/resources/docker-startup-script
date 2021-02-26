@@ -1,0 +1,3 @@
+# start mongo-service container and find ip address of this container using --> docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_id>
+
+docker run --name user-service -p 8282:8080 ajprakash/opentelemetry-user-service:1.0 --db.host="172.17.0.2<mongo-service container_ip>" --db.port="8080<mongo-service container port>" --otel-collector_host="10.196.173.72" --otel-collector_port="4317" --otel-collector_useSsl=false

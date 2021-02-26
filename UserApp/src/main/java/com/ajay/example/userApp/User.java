@@ -1,0 +1,24 @@
+
+package com.ajay.example.userApp;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+
+@JsonIgnoreProperties
+public class User {
+
+    private String name;
+
+    @JsonCreator
+    public User(@JsonProperty("name") String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+}

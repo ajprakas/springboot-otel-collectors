@@ -1,0 +1,1 @@
+java -jar mongo-service/target/springboot-mongo.jar --spring.data.mongodb.database="user_db" --spring.data.mongodb.port="27017" --spring.data.mongodb.host="localhost"
