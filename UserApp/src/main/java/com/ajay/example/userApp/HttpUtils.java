@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -36,16 +38,67 @@ public class HttpUtils {
         textFormat = openTelemetrySdk.getPropagators().getTextMapPropagator();
     }
 
-    public <T> T get(String url, Class T){
+    public <T> T get(String url, Class T) throws Exception {
         HttpHeaders headers = new HttpHeaders();
-
-//        textFormat.inject(Context.current(), headers, setter);
-
         textFormat.inject(Context.current(), headers, setter);
         HttpEntity<T> entity = new HttpEntity<T>(headers);
+        ResponseEntity<T> response = null;
+        try {
+            response =
+                    restTemplate.exchange(url, HttpMethod.GET, entity, T);
+        } catch(HttpClientErrorException.NotFound e){
+            throw new UserNotFoundException();
+        } catch (Exception e){
+                throw new Exception();
+        }
+        return response.getBody();
+    }
 
-        ResponseEntity<T> response =
-                restTemplate.exchange(url, HttpMethod.GET, entity, T);
+    public <T> T create(String url, T payload, Class T) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        textFormat.inject(Context.current(), headers, setter);
+        HttpEntity<T> entity = new HttpEntity<T>(payload, headers);
+        ResponseEntity<T> response = null;
+        try{
+            response =
+                    restTemplate.exchange(url, HttpMethod.POST, entity, T);
+        } catch (Exception e){
+            throw new Exception();
+        }
+        return response.getBody();
+    }
+
+    public <T> T update(String url, T payload, Class T) throws Exception{
+        HttpHeaders headers = new HttpHeaders();
+        textFormat.inject(Context.current(), headers, setter);
+        HttpEntity<T> entity = new HttpEntity<T>(payload, headers);
+        ResponseEntity<T> response = null;
+        try{
+            response =
+                    restTemplate.exchange(url, HttpMethod.PUT, entity, T);
+        } catch (HttpClientErrorException.NotFound e){
+            throw new UserNotFoundException();
+        }
+        catch (Exception e){
+            throw new Exception();
+        }
+        return response.getBody();
+    }
+
+    public <T> T delete(String url, Class T) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        textFormat.inject(Context.current(), headers, setter);
+        HttpEntity<T> entity = new HttpEntity<T>(headers);
+        ResponseEntity<T> response = null;
+        try {
+            response =
+                    restTemplate.exchange(url, HttpMethod.DELETE, entity, T);
+        } catch (HttpClientErrorException.NotFound e){
+            throw new UserNotFoundException();
+        }
+        catch (Exception e){
+            throw new Exception();
+        }
 
         return response.getBody();
     }

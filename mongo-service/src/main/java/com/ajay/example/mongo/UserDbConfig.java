@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 @ComponentScan
@@ -50,6 +51,11 @@ public class UserDbConfig {
 
     @Value("${otel-collector_useSsl}")
     private Boolean otelCollectoruseSsl;
+
+   /* @Bean
+    public MongoTemplate mongoTemplate(){
+        return new MongoTemplate();
+    }*/
 
     @Bean
     public OpenTelemetrySdk openTelemetrySdk() {

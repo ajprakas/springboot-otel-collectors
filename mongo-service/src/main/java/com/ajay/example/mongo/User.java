@@ -40,4 +40,10 @@ public class User {
         this.creationDate = creationDate;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
